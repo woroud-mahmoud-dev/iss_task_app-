@@ -1,0 +1,52 @@
+name: iss_task_app
+description: A simple Flutter app that showcases company projects with clean navigation across Splash, Login, Home, and Detail screens. Built with organized code and intuitive UI to highlight Flutter best practices.
+
+publish_to: 'none'  
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.8.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8           # iOS-style icons for Cupertino widgets
+
+  # Routing & Navigation
+  go_router: ^16.0.0                # Declarative routing for Flutter apps
+
+  # Local Storage & Service Locator
+  shared_preferences: ^2.2.3        # Store simple key-value pairs locally
+  get_it: ^8.0.3                    # Lightweight service locator for dependency injection
+
+  # UI Responsiveness
+  flutter_screenutil: ^5.9.3        # Makes UI responsive on different screen sizes
+
+  # State Management
+  flutter_bloc: ^9.1.1              # Bloc/Cubit for predictable state management
+
+  # Functional Programming & Clean Architecture Support
+  dartz: ^0.10.1                    # Provides Either, Option, and functional helpers
+
+  # UI Enhancements
+  lottie: ^3.3.1                    # Supports Lottie JSON animations
+  shimmer: ^3.0.0                   # Shimmer effect for loading placeholders
+
+  # Data Generation & Internationalization
+  faker: ^2.2.0                     # Generates fake data for testing/demo
+  intl: ^0.20.2                     # Internationalization, date/number formatting
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter                    # Flutter’s built-in test framework
+
+  flutter_lints: ^3.0.1             # Lint rules and static analysis for Dart/Flutter
+
+flutter:
+  uses-material-design: true        # Enables Material icons and widgets
+
+  assets:
+    - assets/images/               # Project images used in UI
+
