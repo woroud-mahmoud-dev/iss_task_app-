@@ -37,7 +37,9 @@ dependencies:
   # Data Generation & Internationalization
   faker: ^2.2.0                     # Generates fake data for testing/demo
   intl: ^0.20.2                     # Internationalization, date/number formatting
+  cached_network_image: ^3.4.1
 
+  flutter_cache_manager: any
 dev_dependencies:
   flutter_test:
     sdk: flutter                    # Flutter’s built-in test framework

@@ -16,13 +16,24 @@ class SharedEvaluatedButton extends StatelessWidget {
   final bool? isLoading;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: theme.elevatedButtonTheme.style,
-      child: SizedBox(
-        height: 24.h,
-        child: Center(
+    return SizedBox(
+      width: double.infinity,
+      height: 50.h,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
+          padding: WidgetStateProperty.all(
+            EdgeInsets.symmetric(vertical: 12.h),
+          ),
+          textStyle: WidgetStateProperty.all(
+            AppTextStyles.style14Bold(
+              context,
+            ).copyWith(color: AppColors.surface, fontSize: 14.sp),
+          ),
+        ),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+
           child: Text(
             isLoading == true ? 'Loading...' : buttonText,
             style: AppTextStyles.style14Bold(

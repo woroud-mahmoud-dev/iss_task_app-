@@ -11,10 +11,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
+
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
       title: 'ISS Task App',
       routerConfig: AppRouter.router,
+      builder: (context, child) {
+        final mediaQuery = MediaQuery.of(context);
+        final isLandscape = mediaQuery.orientation == Orientation.landscape;
+
+        final modifiedScaler = isLandscape
+            ? const TextScaler.linear(0.7)
+            : mediaQuery.textScaler;
+
+        return MediaQuery(
+          data: mediaQuery.copyWith(textScaler: modifiedScaler),
+          child: child!,
+        );
+      },
     );
   }
 }

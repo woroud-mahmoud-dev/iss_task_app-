@@ -11,6 +11,7 @@ Future<void> main() async {
     ScreenUtilInit(
       designSize: AppDimensions.designSize,
       minTextAdapt: true,
+      splitScreenMode: true,
       builder: (_, __) => const MyApp(),
     ),
   );

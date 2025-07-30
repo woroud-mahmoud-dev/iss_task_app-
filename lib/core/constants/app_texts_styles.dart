@@ -1,8 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextStyles {
+  static TextStyle style10(BuildContext context) => TextStyle(
+    color: Theme.of(context).textTheme.bodySmall?.color,
+    fontSize: 10.sp,
+  );
   static TextStyle style12(BuildContext context) => TextStyle(
     color: Theme.of(context).textTheme.bodySmall?.color,
     fontSize: 12.sp,
@@ -30,6 +33,12 @@ class AppTextStyles {
     color: Theme.of(context).textTheme.bodySmall?.color,
     fontSize: 16.sp,
     fontWeight: FontWeight.normal,
+    height: 0,
+  );
+  static TextStyle style16Bold(BuildContext context) => TextStyle(
+    color: Theme.of(context).textTheme.bodySmall?.color,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.bold,
     height: 0,
   );
   static TextStyle style17Bold(BuildContext context) => TextStyle(

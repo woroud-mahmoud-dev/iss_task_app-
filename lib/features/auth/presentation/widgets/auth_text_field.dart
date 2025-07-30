@@ -26,8 +26,10 @@ class AuthTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Text(label, style: AppTextStyles.style17Bold(context)),
+        Text(label, style: AppTextStyles.style14Bold(context)),
         SizedBox(height: 8.h),
         TextFormField(
           obscureText: obscureText ?? false,
@@ -41,19 +43,19 @@ class AuthTextField extends StatelessWidget {
             filled: true,
             fillColor: const Color.fromARGB(255, 228, 238, 247),
             hintText: hintText,
-            hintStyle: AppTextStyles.style12(
+            hintStyle: AppTextStyles.style10(
               context,
             ).copyWith(color: AppColors.textSecondary),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide.none,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide(color: Colors.grey.shade400),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide(color: Theme.of(context).primaryColor),
             ),
             suffixIcon: suffixIcon,

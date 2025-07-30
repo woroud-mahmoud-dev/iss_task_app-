@@ -33,6 +33,8 @@ class LoginForm extends StatelessWidget {
       child: Form(
         key: formKey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AuthTextField(
               label: 'Email address',
@@ -80,7 +82,7 @@ class LoginForm extends StatelessWidget {
                 style: TextButton.styleFrom(padding: EdgeInsets.zero),
                 child: Text(
                   'Forgot password?',
-                  style: AppTextStyles.style12(context),
+                  style: AppTextStyles.style10(context),
                 ),
               ),
             ),
@@ -102,7 +104,7 @@ class LoginForm extends StatelessWidget {
                 const Expanded(child: Divider()),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
-                  child: Text('OR', style: AppTextStyles.style12(context)),
+                  child: Text('OR', style: AppTextStyles.style10(context)),
                 ),
                 const Expanded(child: Divider()),
               ],
@@ -113,7 +115,7 @@ class LoginForm extends StatelessWidget {
                 onPressed: () {},
                 child: Text(
                   'Don’t have an account? Sign Up',
-                  style: AppTextStyles.style12(context),
+                  style: AppTextStyles.style10(context),
                 ),
               ),
             ),

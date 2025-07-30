@@ -40,7 +40,12 @@ class _LogInScreenState extends State<LogInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Log In', style: AppTextStyles.style32Bold(context)),
+        centerTitle: false,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text('Log In', style: AppTextStyles.style24Bold(context)),
+        ),
       ),
       body: BlocConsumer<LogInCubit, LoginState>(
         listener: (context, state) {
@@ -55,25 +60,66 @@ class _LogInScreenState extends State<LogInScreen> {
         },
         builder: (context, state) {
           bool isLoading = state is LoginLoading;
+
           return SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 18.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const LoginHeader(),
-                  LoginForm(
-                    formKey: _formKey,
-                    emailController: _emailController,
-                    passwordController: _passwordController,
-                    obscureText: _obscureText,
-                    onToggleObscure: () =>
-                        setState(() => _obscureText = !_obscureText),
-                    onLogin: _logInWithEmail,
-                    isLoading: isLoading, // Pass loading state to form
+            child: OrientationBuilder(
+              builder: (context, orientation) {
+                final isPortrait = orientation == Orientation.portrait;
+
+                return SingleChildScrollView(
+                  padding: isPortrait
+                      ? EdgeInsets.symmetric(horizontal: 18.w)
+                      : EdgeInsets.symmetric(horizontal: 8.w),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight:
+                          MediaQuery.of(context).size.height - kToolbarHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: isPortrait
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const Expanded(flex: 2, child: LoginHeader()),
+                                Expanded(
+                                  flex: 4,
+                                  child: LoginForm(
+                                    formKey: _formKey,
+                                    emailController: _emailController,
+                                    passwordController: _passwordController,
+                                    obscureText: _obscureText,
+                                    onToggleObscure: () => setState(
+                                      () => _obscureText = !_obscureText,
+                                    ),
+                                    onLogin: _logInWithEmail,
+                                    isLoading: isLoading,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Expanded(child: LoginHeader()),
+                                Expanded(
+                                  child: LoginForm(
+                                    formKey: _formKey,
+                                    emailController: _emailController,
+                                    passwordController: _passwordController,
+                                    obscureText: _obscureText,
+                                    onToggleObscure: () => setState(
+                                      () => _obscureText = !_obscureText,
+                                    ),
+                                    onLogin: _logInWithEmail,
+                                    isLoading: isLoading,
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
                   ),
-                ],
-              ),
+                );
+              },
             ),
           );
         },

@@ -15,5 +15,5 @@ Future<void> initAuthDI() async {
   getIt.registerLazySingleton<LogInWithEmailUseCase>(
     () => LogInWithEmailUseCase(getIt()),
   );
-  getIt.registerLazySingleton<LogInCubit>(() => LogInCubit(getIt()));
+  getIt.registerFactory<LogInCubit>(() => LogInCubit(getIt()));
 }

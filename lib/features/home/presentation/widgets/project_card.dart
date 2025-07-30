@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:iss_task_app/features/home/presentation/widgets/reuseable_image_widget.dart';
 import '../../domain/entities/project.dart';
 
 class ProjectCard extends StatelessWidget {
@@ -10,64 +10,71 @@ class ProjectCard extends StatelessWidget {
 
   const ProjectCard({super.key, required this.project, required this.onTap});
 
+  static const double _cardElevation = 3;
+  static const double _cardMargin = 8;
+  static const double _borderRadius = 12;
+  static const double _imageHeight = 120;
+  static const double _labelSpacing = 4;
+
   @override
   Widget build(BuildContext context) {
     final formatter = DateFormat.yMMMd();
+
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 3,
-        margin: const EdgeInsets.all(8),
+        elevation: _cardElevation,
+        margin: EdgeInsets.all(_cardMargin.w),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_borderRadius.r),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-              child: Image.network(
-                project.imageUrl,
-                height: 120.h,
+            // IMAGE OR ICON
+            Expanded(
+              flex: 4,
+              child: ReusableImageWidget(
+                imageUrl: project.imageUrl,
+                height: _imageHeight.h,
                 width: double.infinity,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Container(
-                      height: 120.h,
-                      width: double.infinity,
-                      color: Colors.white,
-                    ),
-                  );
-                },
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(_borderRadius.r),
+                ),
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    project.name,
-                    style: Theme.of(context).textTheme.titleMedium,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Start: ${formatter.format(project.startDate.toLocal())}',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  Text(
-                    'End:   ${formatter.format(project.endDate.toLocal())}',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
+            // DETAILS
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: EdgeInsets.all(_cardMargin.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        project.name,
+                        style: Theme.of(context).textTheme.titleMedium,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    SizedBox(height: _labelSpacing.h),
+                    Flexible(
+                      child: Text(
+                        'Start: ${formatter.format(project.startDate.toLocal())}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        'End:   ${formatter.format(project.endDate.toLocal())}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

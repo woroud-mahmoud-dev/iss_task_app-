@@ -17,7 +17,6 @@ class LogInCubit extends Cubit<LoginState> {
       email: email,
       password: password,
     );
-    await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
     result.fold(
       (AppFailure failure) => emit(LoginError(failure.message.toString())),
       (AppUser user) => emit(LoginSuccess()),

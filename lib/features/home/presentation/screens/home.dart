@@ -11,6 +11,7 @@ import '../cubit/projects_cubit.dart';
 import '../cubit/projects_state.dart';
 import '../../domain/entities/project.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -35,15 +36,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _setupScrollListener() {
     _scrollController.addListener(() {
+      final cubit = context.read<ProjectsCubit>();
+      final state = cubit.state;
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent - 200 &&
-          !_isLoadingMore) {
-        setState(() => _isLoadingMore = true);
-        context.read<ProjectsCubit>().fetchProjects().then((_) {
-          setState(() => _isLoadingMore = false);
-        });
+          !_isLoadingMore &&
+          state is ProjectsLoaded &&
+          !state.hasReachedMax) {
+        _loadMoreProjects();
       }
     });
+  }
+
+  Future<void> _loadMoreProjects() async {
+    setState(() => _isLoadingMore = true);
+    await context.read<ProjectsCubit>().fetchProjects();
+    setState(() => _isLoadingMore = false);
   }
 
   void _navigateToDetails(Project project) {
@@ -62,25 +70,35 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: const HomeAppBar(),
       body: BlocBuilder<ProjectsCubit, ProjectsState>(
         builder: (context, state) {
+          // very first load
           if (state is ProjectsLoading && state is! ProjectsLoaded) {
             return const HomeShimmer();
-          } else if (state is ProjectsLoaded) {
+          }
+
+          // loaded (possibly empty)
+          if (state is ProjectsLoaded) {
             if (state.projects.isEmpty) {
               return EmptyStateWidget(onRefresh: _loadInitialProjects);
             }
+
             return ProjectsGrid(
               projects: state.projects,
               hasReachedMax: state.hasReachedMax,
+              isLoadingMore: _isLoadingMore,
               scrollController: _scrollController,
               onProjectTap: _navigateToDetails,
             );
-          } else if (state is ProjectsError) {
+          }
+
+          // error
+          if (state is ProjectsError) {
             return ErrorState(
               message: state.message,
               onRetry: _loadInitialProjects,
             );
           }
-          return const SizedBox();
+
+          return const SizedBox.shrink();
         },
       ),
     );
